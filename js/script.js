@@ -36,28 +36,26 @@ $(document).ready(function() {
         var amount = (duration === 15) ? 500 : (duration === 30) ? 1000 : 1500;
 
         // Prepare payment link
-        var paymentLink = `upi://pay?pa=anshutrivedikok-1@okaxis&pn=YourName&tn=Payment%20for%20Counseling&am=${amount}&cu=INR`;
-
-        // Show payment button and set link
-        $('#payment-button').show().off('click').on('click', function() {
-            // Open payment app
-            window.location.href = paymentLink;
-
-            // Simulate successful payment
-            setTimeout(() => {
-                bookedSlots.push({ title, start, duration, amount, date: moment(start).format('MMMM Do YYYY, h:mm a') });
-                localStorage.setItem('bookedSlots', JSON.stringify(bookedSlots));
-                updateBookedSlots();
-                $('#calendar').fullCalendar('renderEvent', { title: 'Booked', start: start, color: '#f44336' });
-                $('#event-form').hide();
-                $('#meeting-form')[0].reset();
-            }, 2000); // Simulating payment confirmation delay
-        });
+        var paymentLink = `upi://pay?pa=anshutrivedikok-1@okaxis&pn=AnshuTrivedi&tn=Payment%20for%20Counseling&am=${amount}&cu=INR`;
 
         // Confirm payment
         if (confirm(`Proceed to payment of ₹${amount} via UPI?`)) {
-            // Trigger the click event to redirect to UPI app
-            $('#payment-button').click();
+            // Show payment button and set link
+            $('#payment-button').show().off('click').on('click', function() {
+                // Open payment app
+                window.location.href = paymentLink;
+
+                // Simulate successful payment
+                setTimeout(() => {
+                    bookedSlots.push({ title, start, duration, amount, date: moment(start).format('MMMM Do YYYY, h:mm a') });
+                    localStorage.setItem('bookedSlots', JSON.stringify(bookedSlots));
+                    updateBookedSlots();
+                    $('#calendar').fullCalendar('renderEvent', { title: 'Booked', start: start, color: '#f44336' });
+                    $('#event-form').hide();
+                    $('#meeting-form')[0].reset();
+                }, 2000); // Simulating payment confirmation delay
+            });
+            $('#payment-button').click(); // Trigger the click event to redirect to UPI app
         }
     });
 
