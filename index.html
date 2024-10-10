@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Counseling Service</title>
+    <title>Connect with Me</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
-        .container { max-width: 600px; margin: auto; }
-        button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-        button:hover { background-color: #45a049; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 800px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { color: #4CAF50; }
+        .intro { margin: 20px 0; }
         .calendar { margin-top: 20px; }
+        button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        .booked { background-color: #f44336; color: white; padding: 5px; border-radius: 4px; }
     </style>
     <!-- Include FullCalendar CSS and JS -->
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
@@ -18,30 +22,35 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 </head>
 <body>
+    <header>
+        <h1>Connect with Me</h1>
+    </header>
     <div class="container">
-        <h1>Your Counseling Service</h1>
-        
-        <h2>About Me</h2>
-        <p>Hello! I specialize in Data Structures and Algorithms. I have a strong background in:</p>
-        <ul>
-            <li>Problem-solving techniques</li>
-            <li>Algorithm optimization</li>
-            <li>Data structure implementation</li>
-            <li>Competitive programming</li>
-        </ul>
+        <section class="intro">
+            <h2>About Me</h2>
+            <p>I work on data science and computer vision problems and can help with career counseling.</p>
+        </section>
 
-        <h2>Schedule a Meeting</h2>
-        <div class="calendar"></div>
+        <section class="calendar">
+            <h2>Schedule a Meeting</h2>
+            <div id="calendar"></div>
+        </section>
 
-        <h2>Make a Payment</h2>
-        <button onclick="window.location.href='upi://pay?pa=your_upi_id@bank&pn=YourName&mc=1234&tid=txn_id&tn=Payment%20for%20Counseling&am=amount&cu=INR&url=https://example.com'">
-            Pay via UPI
-        </button>
+        <section>
+            <h2>Make a Payment</h2>
+            <button onclick="window.location.href='upi://pay?pa=your_upi_id@bank&pn=YourName&mc=1234&tid=txn_id&tn=Payment%20for%20Counseling&am=amount&cu=INR&url=https://example.com'">
+                Pay via UPI
+            </button>
+        </section>
     </div>
 
     <script>
         $(document).ready(function() {
-            $('.calendar').fullCalendar({
+            var bookedSlots = [
+                '2023-10-15T10:00:00', // Example booked slot
+                '2023-10-15T11:00:00'  // Add more booked slots as needed
+            ];
+            $('#calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -49,22 +58,33 @@
                 },
                 selectable: true,
                 select: function(start, end) {
-                    var eventTitle = prompt('Enter Meeting Title:');
-                    if (eventTitle) {
-                        var eventData = {
-                            title: eventTitle,
-                            start: start,
-                            end: end
-                        };
-                        $('.calendar').fullCalendar('renderEvent', eventData, true);
+                    var startTime = moment(start).format();
+                    var endTime = moment(end).format();
+
+                    if (bookedSlots.includes(startTime)) {
+                        alert('This time slot is already booked. Please choose another time.');
+                    } else {
+                        var eventTitle = prompt('Enter Meeting Title:');
+                        if (eventTitle) {
+                            var eventData = {
+                                title: eventTitle,
+                                start: start,
+                                end: end
+                            };
+                            $('#calendar').fullCalendar('renderEvent', eventData, true);
+                            bookedSlots.push(startTime); // Add to booked slots
+                        }
                     }
-                    $('.calendar').fullCalendar('unselect');
+                    $('#calendar').fullCalendar('unselect');
                 },
                 editable: true,
-                events: []  // You can fetch events from a database if needed
+                events: bookedSlots.map(slot => ({
+                    title: 'Booked',
+                    start: slot,
+                    color: '#f44336' // Red color for booked slots
+                }))
             });
         });
     </script>
 </body>
 </html>
-
