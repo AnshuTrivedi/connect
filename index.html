@@ -4,25 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connect with Me</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
-        .container { max-width: 800px; margin: 20px auto; }
-        section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h2 { color: #4CAF50; }
-        .intro { margin: 20px 0; }
-        .calendar { margin-top: 20px; }
-        button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        button:hover { background-color: #45a049; }
-        .booked { background-color: #f44336; color: white; padding: 5px; border-radius: 4px; }
-        form { margin-top: 20px; }
-        input, select, textarea { width: 100%; padding: 10px; margin: 5px 0; }
-        #event-form { display: none; }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 </head>
 <body>
     <header>
@@ -55,88 +38,21 @@
 
         <section>
             <h2>Make a Payment</h2>
-            <button id="payment-button">
+            <button id="payment-button" style="display:none;">
                 Pay via UPI
             </button>
         </section>
+
+        <section class="slot-info">
+            <h2>Booked Meetings</h2>
+            <div id="booked-slots"></div>
+        </section>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            var bookedSlots = [
-                '2023-10-15T10:00:00', // Example booked slot
-                '2023-10-15T11:00:00'  // Add more booked slots as needed
-            ];
-
-            $('#calendar').fullCalendar({
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                selectable: true,
-                select: function(start, end) {
-                    var startTime = moment(start).format();
-                    if (bookedSlots.includes(startTime)) {
-                        alert('This time slot is already booked. Please choose another time.');
-                    } else {
-                        $('#event-form').show();
-                        $('#event-time').val(startTime);
-                    }
-                    $('#calendar').fullCalendar('unselect');
-                },
-                editable: true,
-                events: bookedSlots.map(slot => ({
-                    title: 'Booked',
-                    start: slot,
-                    color: '#f44336' // Red color for booked slots
-                }))
-            });
-
-            $('#meeting-form').on('submit', function(e) {
-                e.preventDefault();
-                var title = $('#event-title').val();
-                var start = $('#event-time').val();
-                var duration = parseInt($('#event-duration').val());
-                var end = moment(start).add(duration, 'minutes').format();
-
-                var description = $('#event-description').val();
-                var amount = 0;
-
-                // Determine the amount based on the selected duration
-                switch (duration) {
-                    case 15:
-                        amount = 500;
-                        break;
-                    case 30:
-                        amount = 1000;
-                        break;
-                    case 60:
-                        amount = 1500;
-                        break;
-                }
-
-                // Create a Google Calendar event URL
-                var eventUrl = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(title)}&dates=${start.replace(/-|:/g, '').slice(0, 15)}Z/${end.replace(/-|:/g, '').slice(0, 15)}Z&details=${encodeURIComponent(description)}&sf=true&output=xml`;
-
-                // Open the event in Google Calendar
-                window.open(eventUrl, '_blank');
-
-                // Add to booked slots
-                bookedSlots.push(start);
-                $('#calendar').fullCalendar('renderEvent', {
-                    title: 'Booked',
-                    start: start,
-                    end: end,
-                    color: '#f44336'
-                });
-
-                // Show payment button with dynamic link
-                $('#payment-button').attr('onclick', `window.location.href='upi://pay?pa=anshutrivedik-1@okaxis&pn=YourName&mc=1234&tn=Payment%20for%20Counseling&am=${amount}&cu=INR'`);
-                $('#event-form').hide();
-                $('#meeting-form')[0].reset();
-            });
-        });
-    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
+
