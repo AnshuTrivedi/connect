@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Counseling Service</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .calendar { margin: 20px auto; }
+        button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Your Counseling Service</h1>
+    <div class="calendar">
+        <h2>Availability</h2>
+        <!-- Replace this with your actual calendar display -->
+        <p>Available: Monday to Friday, 9 AM to 5 PM</p>
+        <p>Select your time slot!</p>
+        <!-- Here you can implement a simple calendar interface -->
+    </div>
+    <div>
+        <h2>Make a Payment</h2>
+        <button onclick="window.location.href='upi://pay?pa=your_upi_id@bank&pn=YourName&mc=1234&tid=txn_id&tn=Payment%20for%20Counseling&am=amount&cu=INR&url=https://example.com'">
+            Pay via UPI
+        </button>
+    </div>
+</body>
+</html>
