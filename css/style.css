@@ -1,0 +1,79 @@
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #eaeaea; 
+}
+
+header { 
+    background-color: #4CAF50; 
+    color: white; 
+    padding: 20px; 
+    text-align: center; 
+    border-bottom: 2px solid #ccc; 
+}
+
+.container { 
+    max-width: 800px; 
+    margin: 20px auto; 
+    padding: 20px; 
+    background: white; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+}
+
+h2 { 
+    color: #4CAF50; 
+}
+
+.intro { 
+    margin: 20px 0; 
+}
+
+.calendar { 
+    margin-top: 20px; 
+}
+
+button { 
+    padding: 10px 20px; 
+    background-color: #4CAF50; 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+
+button:hover { 
+    background-color: #45a049; 
+}
+
+form { 
+    margin-top: 20px; 
+}
+
+input, select, textarea { 
+    width: 100%; 
+    padding: 10px; 
+    margin: 5px 0; 
+}
+
+#event-form { 
+    display: none; 
+}
+
+.booked { 
+    background-color: #f44336; 
+    color: white; 
+    padding: 5px; 
+    border-radius: 4px; 
+}
+
+.slot-info { 
+    margin-top: 20px; 
+}
+
+.booked-slot { 
+    background-color: #c8e6c9; 
+    padding: 10px; 
+    border-radius: 5px; 
+}
