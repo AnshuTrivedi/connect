@@ -5,26 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Counseling Service</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .calendar { margin: 20px auto; }
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        .container { max-width: 600px; margin: auto; }
         button { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
         button:hover { background-color: #45a049; }
+        .calendar { margin-top: 20px; }
     </style>
+    <!-- Include FullCalendar CSS and JS -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 </head>
 <body>
-    <h1>Your Counseling Service</h1>
-    <div class="calendar">
-        <h2>Availability</h2>
-        <!-- Replace this with your actual calendar display -->
-        <p>Available: Monday to Friday, 9 AM to 5 PM</p>
-        <p>Select your time slot!</p>
-        <!-- Here you can implement a simple calendar interface -->
-    </div>
-    <div>
+    <div class="container">
+        <h1>Your Counseling Service</h1>
+        
+        <h2>About Me</h2>
+        <p>Hello! I specialize in Data Structures and Algorithms. I have a strong background in:</p>
+        <ul>
+            <li>Problem-solving techniques</li>
+            <li>Algorithm optimization</li>
+            <li>Data structure implementation</li>
+            <li>Competitive programming</li>
+        </ul>
+
+        <h2>Schedule a Meeting</h2>
+        <div class="calendar"></div>
+
         <h2>Make a Payment</h2>
         <button onclick="window.location.href='upi://pay?pa=your_upi_id@bank&pn=YourName&mc=1234&tid=txn_id&tn=Payment%20for%20Counseling&am=amount&cu=INR&url=https://example.com'">
             Pay via UPI
         </button>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                selectable: true,
+                select: function(start, end) {
+                    var eventTitle = prompt('Enter Meeting Title:');
+                    if (eventTitle) {
+                        var eventData = {
+                            title: eventTitle,
+                            start: start,
+                            end: end
+                        };
+                        $('.calendar').fullCalendar('renderEvent', eventData, true);
+                    }
+                    $('.calendar').fullCalendar('unselect');
+                },
+                editable: true,
+                events: []  // You can fetch events from a database if needed
+            });
+        });
+    </script>
 </body>
 </html>
+
